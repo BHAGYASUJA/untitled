@@ -23,4 +23,5 @@ class _SelectContactState extends State<SelectContact> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold();
+  }
 }
