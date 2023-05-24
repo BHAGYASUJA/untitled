@@ -1,25 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    // options : DefaultFirebaseOptions.currentPlatform,
-  );
-  /// runApp(phoneAuthentication());
-  runApp(MaterialApp(home: phoneAuthentication()));
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
 
-class phoneAuthentication extends StatefulWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  State<phoneAuthentication> createState() => _phoneAuthenticationState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _phoneAuthenticationState extends State<phoneAuthentication> {
-
+class _MyAppState extends State<MyApp> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
 
@@ -59,15 +56,19 @@ class _phoneAuthenticationState extends State<phoneAuthentication> {
         .signInWithCredential(credential)
         .then((value) => print('User Login In Successful'));
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Phone authentication'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Phone Authentication',
+          ),
+          centerTitle: true,
+        ),
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
@@ -85,7 +86,6 @@ class _phoneAuthenticationState extends State<phoneAuthentication> {
                 },
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Visibility(
@@ -100,7 +100,6 @@ class _phoneAuthenticationState extends State<phoneAuthentication> {
                 ),
               ),
             ),
-
             ElevatedButton(
               onPressed: () {
                 if (otpFieldVisibility) {
@@ -117,7 +116,6 @@ class _phoneAuthenticationState extends State<phoneAuthentication> {
           ],
         ),
       ),
-
     );
   }
 }
